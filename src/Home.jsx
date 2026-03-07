@@ -1,14 +1,14 @@
 import "../global.css"
 import { StatusBar } from 'expo-status-bar';
-import { Text, View, Image, TextInput, TouchableOpacity, ScrollView } from 'react-native';
+import { Text, View, Image, TextInput, TouchableOpacity, ScrollView, Animated, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from "react-native-safe-area-context";
 import { theme, weatherImages } from "../utils/utils";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, useRef } from "react";
 import { debounce } from "lodash";
 import { fetchLocations, fetchWeatherForecast } from "../api/weather";
 
 export default function Home() {
-  const waitTime = 1200;
+  const waitTime = 500;
   const minSearchLength = 2;
   
   // handle search bar
@@ -17,15 +17,21 @@ export default function Home() {
   const handleSearchOpen = () => setIsSearching(true);
   const handleSearchClose = () => setIsSearching(false);
 
+  // loader screen
+  const [loading, setLoading] = useState(true);
+  const fadeAnime = useRef(new Animated.Value(1)).current;
+
   // handling location from results
   const [locations, setLocations] = useState([]);
   const handleLocation = (loc) => {
     setLocations([]);
+    setLoading(true)
     fetchWeatherForecast({
       cityName: loc.name,
-      days: '7'
+      days: '7',
     }).then(data => {
       setWeather(data);
+      setLoading(false)
     })
     setIsSearching(false);
   }
@@ -47,10 +53,11 @@ export default function Home() {
 
   const fetchWeatherData = async () => {
     fetchWeatherForecast({
-      cityName: "san diego",
+      cityName: "London",
       days: '7'
     }).then(data => {
       setWeather(data);
+      setLoading(false)
     })
   }
 
@@ -72,7 +79,21 @@ export default function Home() {
         className="absolute h-full w-full"
       />
 
-      <SafeAreaView className="flex flex-1">
+      {/* loading data first, then rendering */}
+      {
+        loading ? (
+
+          // add a progress bar at loading state
+          <Animated.View 
+          style={{ opacity:fadeAnime }}
+          className="flex-1 items-center justify-center"
+          >
+            <ActivityIndicator size={75} color="#fff" />
+          </Animated.View>
+
+        ) : (
+
+          <SafeAreaView className="flex flex-1">
         {/* search section */}
         <View className="m-4 my-2 z-50" onFocus={handleSearchOpen} onBlur={handleSearchClose}>
 
@@ -243,6 +264,10 @@ export default function Home() {
         )}
 
       </SafeAreaView>
+        )
+      }
+
+      
     </View>
   );
 }
