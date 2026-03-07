@@ -6,6 +6,8 @@ import { theme, weatherImages } from "../utils/utils";
 import { useCallback, useEffect, useState, useRef } from "react";
 import { debounce } from "lodash";
 import { fetchLocations, fetchWeatherForecast } from "../api/weather";
+import { setData } from '../utils/asyncStorage';
+import { getData } from "../utils/asyncStorage";
 
 export default function Home() {
   const waitTime = 500;
@@ -31,7 +33,8 @@ export default function Home() {
       days: '7',
     }).then(data => {
       setWeather(data);
-      setLoading(false)
+      setLoading(false);
+      setData('city', loc.name);
     })
     setIsSearching(false);
   }
@@ -52,6 +55,12 @@ export default function Home() {
   },[]);
 
   const fetchWeatherData = async () => {
+    let myCity = await getData('city');
+    let cityName = 'London';
+
+    // set the data if there is any
+    if(myCity) cityName = myCity;
+
     fetchWeatherForecast({
       cityName: "London",
       days: '7'
@@ -208,7 +217,7 @@ export default function Home() {
                   source={require('../assets/icons/sun.png')}
                   tintColor={'white'}
                   className="w-7 h-7"/>
-                  <Text className="text-white font-medium text-xl">6:05 AM</Text>
+                  <Text className="text-white font-medium text-xl">{weather?.forecast?.forecastday[0]?.astro?.sunrise}</Text>
                 </View>
 
               </View>

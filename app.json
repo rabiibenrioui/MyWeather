@@ -20,7 +20,8 @@
         "foregroundImage": "./assets/app/adaptive-icon.png",
         "backgroundColor": "#000000"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.rabiibenrioui.MyWeather"
     },
     "web": {
       "bundler": "metro",
