@@ -1,13 +1,13 @@
 import "../global.css"
 import { StatusBar } from 'expo-status-bar';
 import { Text, View, Image, TextInput, TouchableOpacity, ScrollView, Animated, ActivityIndicator } from 'react-native';
-import { SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { theme, weatherImages } from "../utils/utils";
 import { useCallback, useEffect, useState, useRef } from "react";
 import { debounce } from "lodash";
 import { fetchLocations, fetchWeatherForecast } from "../api/weather";
-import { setData } from '../utils/asyncStorage';
-import { getData } from "../utils/asyncStorage";
+import { setData } from '../utils/secureStore';
+import { getData } from "../utils/secureStore";
 
 export default function Home() {
   const waitTime = 500;
@@ -62,7 +62,7 @@ export default function Home() {
     if(myCity) cityName = myCity;
 
     fetchWeatherForecast({
-      cityName: "London",
+      cityName: cityName,
       days: '7'
     }).then(data => {
       setWeather(data);
@@ -79,6 +79,7 @@ export default function Home() {
 
   // rendering
   return (
+    <SafeAreaProvider>
     <View className="flex-1 relative">
 
       <StatusBar style="light" />
@@ -280,5 +281,6 @@ export default function Home() {
 
       
     </View>
+    </SafeAreaProvider>
   );
 }
