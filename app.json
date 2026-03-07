@@ -1,16 +1,16 @@
 {
   "expo": {
-    "name": "MyWeather",
-    "slug": "MyWeather",
+    "name": "My Weather",
+    "slug": "myweather",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/app/icon.png",
-    "userInterfaceStyle": "light",
+    "userInterfaceStyle": "dark",
     "newArchEnabled": true,
     "splash": {
       "image": "./assets/app/splash-icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#000000"
+      "backgroundColor": "#006666"
     },
     "ios": {
       "supportsTablet": true
@@ -18,10 +18,10 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/app/adaptive-icon.png",
-        "backgroundColor": "#000000"
+        "backgroundColor": "#006666"
       },
       "edgeToEdgeEnabled": true,
-      "package": "com.rabiibenrioui.MyWeather"
+      "package": "com.rabiibenrioui.myweather"
     },
     "web": {
       "bundler": "metro",

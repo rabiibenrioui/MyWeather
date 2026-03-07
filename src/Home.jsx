@@ -77,6 +77,7 @@ export default function Home() {
   const [weather, setWeather] = useState({});
   const {current, location} = weather;
 
+  // rendering
   return (
     <View className="flex-1 relative">
 
@@ -84,7 +85,8 @@ export default function Home() {
 
       {/* background image */}
       <Image 
-        source={require('../assets/images/bg.png')}
+        source={require('../assets/images/bg-3.png')}
+        blurRadius={115}
         className="absolute h-full w-full"
       />
 
