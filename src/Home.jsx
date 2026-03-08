@@ -44,7 +44,7 @@ export default function Home() {
     // fetch locations
     if(value.length >= minSearchLength){
       fetchLocations({cityName: value}).then(data=>{
-        setLocations(data)
+        setLocations(data || [])
       })
     }
   }
@@ -65,8 +65,13 @@ export default function Home() {
       cityName: cityName,
       days: '7'
     }).then(data => {
-      setWeather(data);
+      if (data) {
+        setWeather(data);
+      }
       setLoading(false)
+    }).catch(error => {
+      console.error('Forecast fetch failed: ', error);
+      setLoading(false);
     })
   }
 
@@ -75,7 +80,7 @@ export default function Home() {
 
   // handling received data
   const [weather, setWeather] = useState({});
-  const {current, location} = weather;
+  const {current, location} = weather || {};
 
   // rendering
   return (
