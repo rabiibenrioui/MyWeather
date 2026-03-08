@@ -2,7 +2,7 @@
   "expo": {
     "name": "My Weather",
     "slug": "myweather",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/app/icon.png",
     "userInterfaceStyle": "dark",
@@ -18,7 +18,7 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/app/adaptive-icon.png",
-        "backgroundColor": "#006666"
+        "backgroundColor": "#00FFFF"
       },
       "edgeToEdgeEnabled": true,
       "package": "com.rabiibenrioui.myweather"
